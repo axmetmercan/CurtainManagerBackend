@@ -9,3 +9,5 @@ class Color(models.Model):
     class Meta:
         verbose_name = "Renk"
         verbose_name_plural = "Renkler"
+  
+  
