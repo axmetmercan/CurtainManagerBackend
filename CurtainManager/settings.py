@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'product.apps.ProductConfig',
     'picture.apps.PictureConfig',
-    
+    'measurement.apps.MeasurementConfig',
 
 
     #Installed Modules    
