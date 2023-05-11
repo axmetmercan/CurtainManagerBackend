@@ -2,9 +2,10 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from product.models import Curtain
 from .room import Room
+from .measurement_group import MeasurementGroup
 
 class Measurement(models.Model):
-    measurement_group_id = models.CharField(max_length=12, blank=False, null=False, verbose_name='Ölçü Grup Idsi')
+    measurement_group = models.ForeignKey( MeasurementGroup, on_delete=models.DO_NOTHING ,blank=False, null=False, verbose_name='Ölçü Grup Idsi')
     room_name = models.ForeignKey(Room, on_delete=models.DO_NOTHING, verbose_name='Oda Adı')
     width = models.IntegerField(verbose_name='Genişlik',blank=False, null=False, validators=[MaxValueValidator(600), MinValueValidator(30)])
     height =models.IntegerField(verbose_name='Yükseklik', blank=False, null=False, validators=[MaxValueValidator(600), MinValueValidator(50)])
