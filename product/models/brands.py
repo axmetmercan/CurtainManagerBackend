@@ -10,6 +10,10 @@ class Brand(models.Model):
     owner = models.ForeignKey(Company, on_delete=models.CASCADE,
                               verbose_name='Üretici Şirket', null=False, blank=False, default=0)
 
+    def __str__(self):
+        return str(self.title)
+
+
     class Meta:
         verbose_name = 'Marka'
         verbose_name_plural = 'Markalar'

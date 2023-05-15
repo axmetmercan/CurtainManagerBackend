@@ -13,6 +13,9 @@ class Customer(models.Model):
     tc_no = models.BigIntegerField(verbose_name='Tc Kimlik Numarası')
 
 
+    def __str__(self) -> str:
+        return str(self.name + " " + self.surname)
+
     class Meta:
         verbose_name = 'Müşteri'
         verbose_name_plural = 'Müşteriler'

@@ -7,7 +7,7 @@ class CustomerOrder(models.Model):
     measurement = models.ForeignKey(Measurement, on_delete=models.DO_NOTHING, verbose_name='Ölçüler', related_name='measurements' ,blank=False, null=False)
     measurement_group = models.ForeignKey(MeasurementGroup, on_delete=models.DO_NOTHING, verbose_name='Ölçü Grubu', related_name='measurement_groups', null=False, blank=False)
 
-
+    
     class Meta:
 
         verbose_name='Müşteri Siparişi'

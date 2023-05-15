@@ -1,6 +1,6 @@
 from django.db import models
 from .brands import Brand
-from company.models import Company
+from company.models import Company, Dealers
 from .color import Color
 from picture.models import Picture
 from .category import Category
@@ -11,7 +11,7 @@ from .category import Category
 
 class Curtain(models.Model):
     brand = models.ForeignKey(
-        Brand, on_delete=models.CASCADE, verbose_name='Renk', related_name="brands", blank=False, null=False)
+        Brand, on_delete=models.CASCADE, verbose_name='Marka', related_name="brands", blank=False, null=False)
     brand_company = models.ForeignKey(
         Company, on_delete=models.CASCADE, verbose_name='Üretici Şirket', related_name="brand_companies", blank=False, null=False)
     category = models.ForeignKey(
@@ -37,6 +37,11 @@ class Curtain(models.Model):
     img3 = models.ForeignKey(
         Picture, on_delete=models.DO_NOTHING, verbose_name='Resim1', related_name='img3s',  null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
+
+
+    def __str__(self):
+        return str(self.code)
+
 
     class Meta:
         verbose_name='Ürün'

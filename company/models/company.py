@@ -21,6 +21,10 @@ class Company(models.Model):
     address = models.CharField(max_length=255, blank=False, null=False)
     tax_document_pic = models.ForeignKey(Picture, related_name="pictures", on_delete=models.CASCADE, null=False, blank=False)
 
+    def __str__(self):
+
+            return str(self.name)
+
     class Meta:
         verbose_name = "Şirket"
         verbose_name_plural = "Şirketler"

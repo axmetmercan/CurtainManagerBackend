@@ -75,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     tc_number = models.BigIntegerField(blank=False, null=False ,verbose_name='Employee National ID')
     salary = models.IntegerField(verbose_name='Salary', default=None, null=True, blank=True)
     type = models.ForeignKey(UserType , null=True, blank=True, on_delete=models.DO_NOTHING)
-    # company=models.ForeignKey(Company, related_name='companies',verbose_name='Company', on_delete=models.CASCADE, null=True, blank=True )
+    company=models.ForeignKey(Company,verbose_name='Company', on_delete=models.CASCADE, null=True, blank=True )
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=True)
