@@ -2,16 +2,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import BrandsListView,CurtainListViewSet
+from .views import BrandsListView,CurtainListViewSet, CategoryListViewset, ColorListViewset
 
 
 router = routers.DefaultRouter()
 router.register(r"brands", BrandsListView, basename='Get information of brands')
 router.register(r"products", CurtainListViewSet, basename='Get information of products')
+router.register(r"colors", ColorListViewset, basename='Get information of product colors')
+router.register(r"categories", CategoryListViewset, basename='Get information of product categories')
+
 
 
 urlpatterns = [
-
 
     path('', include(router.urls)),
 

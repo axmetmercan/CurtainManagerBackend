@@ -24,6 +24,13 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('product/', include('product.urls')),
     path('company/', include('company.urls')),
+    path('picture/', include('picture.urls')),
+    path('employee/', include('user.urls')),
+    path('customer/', include('customer.urls')),
+    path('measurement/', include('measurement.urls')),
+
+    
+
 
 ]
 if settings.DEBUG:

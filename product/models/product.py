@@ -1,6 +1,6 @@
 from django.db import models
 from .brands import Brand
-from company.models import Company, Dealers
+from company.models import Company
 from .color import Color
 from picture.models import Picture
 from .category import Category

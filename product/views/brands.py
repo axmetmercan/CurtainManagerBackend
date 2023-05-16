@@ -1,15 +1,18 @@
 from django.shortcuts import render
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, permissions
 from ..models import Brand
 from ..serializers import BrandSerializer
 from company.models import Dealers
 from itertools import chain
+from ..pagination import NumberPagination
 # Create your views here.
 
 
 class BrandsListView(viewsets.GenericViewSet,
                     mixins.ListModelMixin):
     serializer_class = BrandSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = NumberPagination
     
     
     def get_queryset(self):

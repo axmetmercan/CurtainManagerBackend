@@ -1,2 +1,4 @@
 from .brand_serializer import BrandSerializer
 from .product_serializer import CurtainSerializer
+from .color_serializer import ColorSerializer
+from .category_serializer import CategorySerializer
