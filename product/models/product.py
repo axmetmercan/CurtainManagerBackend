@@ -18,7 +18,7 @@ class Curtain(models.Model):
         Category, on_delete=models.CASCADE, verbose_name='Kategori', related_name='categories', blank=False, null=False)
     color = models.ForeignKey(
         Color, on_delete=models.CASCADE, verbose_name='Renk', related_name='colors', blank=False, null=False)
-    code = models.CharField(max_length=200, verbose_name="Barkod")
+    code = models.CharField(max_length=200, verbose_name="Barkod", unique=True)
     variant = models.CharField(
         max_length=200, verbose_name='Varyant', blank=True, null=True)
     weight = models.IntegerField(null=True, blank=True, verbose_name='Gramaj')

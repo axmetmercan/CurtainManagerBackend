@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, mixins, permissions
 from .serializers import PictureSerializer
 from .models import Picture
+from .pagination import DefaultPagination
+
 
 
 class PictureLRViewset(viewsets.GenericViewSet, 
@@ -11,6 +13,7 @@ class PictureLRViewset(viewsets.GenericViewSet,
     
     serializer_class = PictureSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DefaultPagination
 
 
     def get_queryset(self):

@@ -4,6 +4,8 @@ from .serializers import CompanySerializer, DealersSerializer, CreateDealerSeria
 from .models import Company, Dealers
 from .permissions import IsAuthAndBelongsTo
 from rest_framework import permissions as per
+from .pagination import DefaultPagination
+
 
 
 # Create your views here.
@@ -14,7 +16,7 @@ class CreateCompanyViewset(viewsets.GenericViewSet,
 
     serializer_class = CompanySerializer
     permission_classes = []
-
+    pagination_class = DefaultPagination
 
 class CompanyDetailViews(viewsets.GenericViewSet,
                          mixins.ListModelMixin):
@@ -27,7 +29,7 @@ class CompanyDetailViews(viewsets.GenericViewSet,
 
     def get_queryset(self):
 
-        current_user = self.request.user.id
+        current_user = self.request.user.company.id
 
         return Company.objects.filter(id=current_user)
 
@@ -37,10 +39,11 @@ class DealersListViewset(viewsets.GenericViewSet,
                          mixins.ListModelMixin):
 
     serializer_class = DealersSerializer
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
 
-        current_user = self.request.user.id
+        current_user = self.request.user.company.id
 
         return Dealers.objects.filter(whole_saler=current_user)
 
@@ -51,6 +54,7 @@ class CreateDestroyDealerViewset(viewsets.GenericViewSet,
                                  mixins.DestroyModelMixin
                                  ):
     serializer_class = CreateDealerSerializer
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
 

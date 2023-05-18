@@ -4,7 +4,7 @@ from ..models import Brand
 from ..serializers import BrandSerializer
 from company.models import Dealers
 from itertools import chain
-from ..pagination import NumberPagination
+from ..pagination import DefaultPagination
 # Create your views here.
 
 
@@ -12,7 +12,7 @@ class BrandsListView(viewsets.GenericViewSet,
                     mixins.ListModelMixin):
     serializer_class = BrandSerializer
     permission_classes = [permissions.IsAuthenticated]
-    pagination_class = NumberPagination
+    pagination_class = DefaultPagination
     
     
     def get_queryset(self):

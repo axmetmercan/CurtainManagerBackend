@@ -2,12 +2,13 @@ from django.shortcuts import render
 from rest_framework import mixins, permissions, viewsets
 from .models import User, UserType
 from .serializers import UserSerializer, UserTypeSerializer
-
+from .pagination import DefaultPagination
 
 class UserCRUD(viewsets.ModelViewSet):
 
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         return User.objects.filter(company=self.request.user.company)
@@ -26,6 +27,7 @@ class EmployeeTypesViewset(viewsets.GenericViewSet, mixins.ListModelMixin):
     serializer_class = UserTypeSerializer
     queryset = UserType.objects.all()
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DefaultPagination
 
 
 
