@@ -14,4 +14,4 @@ class Category(models.Model):
     
     class Meta:
         verbose_name = "Kategori"
-        verbose_name = "Kategoriler"
+        verbose_name_plural = "Kategoriler"
