@@ -1,5 +1,6 @@
 from django.db import models
 from company.models import Company
+import datetime
 # Create your models here.
 
 
@@ -11,7 +12,7 @@ class Customer(models.Model):
     email = models.EmailField(max_length=100, blank=False, null=False, verbose_name='Email')
     address = models.CharField(max_length=100, blank=False,null=False, verbose_name='Açık Adres')
     tc_no = models.BigIntegerField(verbose_name='Tc Kimlik Numarası')
-
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return str(self.name + " " + self.surname)

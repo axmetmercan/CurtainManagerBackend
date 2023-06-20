@@ -9,6 +9,7 @@ class Measurement(models.Model):
     room_name = models.ForeignKey(Room, on_delete=models.DO_NOTHING, verbose_name='Oda Adı')
     width = models.IntegerField(verbose_name='Genişlik',blank=False, null=False, validators=[MaxValueValidator(600), MinValueValidator(30)])
     height =models.IntegerField(verbose_name='Yükseklik', blank=False, null=False, validators=[MaxValueValidator(600), MinValueValidator(50)])
+    type = models.FloatField(verbose_name='Pile/Tip', blank=False, null=False, default=1, validators=[MaxValueValidator(3), MinValueValidator(1)])
     measurement_note = models.CharField(max_length=(255), verbose_name='Ölçü Notu', blank=True, null=True)
     unit_price = models.FloatField(verbose_name='Birim Fiyatı', null=False, blank=False, validators=[MinValueValidator(0)])
     room_pic = models.ImageField(upload_to='measurement/windows/%Y/%m/%d', verbose_name='Pencere Resmi', blank=True, null=True)

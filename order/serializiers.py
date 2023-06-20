@@ -15,6 +15,7 @@ ORDER_STATUS = (
     ("active", "Aktif"),
     ("preparing", "Hazırlanıyor"),
     ("on_delivery", "Teslimatta"),
+    ("on_control", "Kontrolde"),
     ('delivered', "Teslim Edildi"),
     ('waiting_payment', "Ödeme Bekliyor"),
     ('completed', 'Tamamlandı')
@@ -25,7 +26,7 @@ class CustomerOrderSerializer(serializers.ModelSerializer):
     customer = serializers.StringRelatedField(read_only=False)
     company = serializers.StringRelatedField()
     measurement = MeasurementSerializer(read_only=True,)
-    status = serializers.CharField(source= 'get_status_display', read_only=True)
+    long_status = serializers.CharField(source= 'get_status_display', read_only=True)
     
     class Meta:
         model = CustomerOrder

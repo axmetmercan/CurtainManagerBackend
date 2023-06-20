@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from .models import Company, Dealers
+from picture.serializers import PictureSerializer
 
 class CompanySerializer(serializers.ModelSerializer):
+    tax_document_pic = PictureSerializer(read_only=True)
     class Meta:
         model = Company
         fields = '__all__'

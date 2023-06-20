@@ -3,7 +3,7 @@ from rest_framework import viewsets, mixins, permissions
 from .serializers import PictureSerializer
 from .models import Picture
 from .pagination import DefaultPagination
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class PictureLRViewset(viewsets.GenericViewSet, 
@@ -14,6 +14,7 @@ class PictureLRViewset(viewsets.GenericViewSet,
     serializer_class = PictureSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = DefaultPagination
+    # parser_classes = [MultiPartParser, FormParser]
 
 
     def get_queryset(self):

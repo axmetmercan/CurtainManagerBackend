@@ -4,6 +4,7 @@ from .models import User, UserType
 from .serializers import UserSerializer, UserTypeSerializer
 from .pagination import DefaultPagination
 
+
 class UserCRUD(viewsets.ModelViewSet):
 
     serializer_class = UserSerializer
@@ -17,9 +18,15 @@ class UserCRUD(viewsets.ModelViewSet):
         user_type = UserType.objects.get(title=self.request.data.get('type'))
         instance = serializer.save(company=self.request.user.company,
                       type=user_type,)
-        
+
         instance.set_password(self.request.data.get('password'))
         instance.save()
+
+    # def perform_update(self, serializer):
+    #     user_type = UserType.objects.get(title=self.request.data.get('type'))
+    #     instance = serializer(type=user_type)
+    #     instance.save()
+
 
 
 class EmployeeTypesViewset(viewsets.GenericViewSet, mixins.ListModelMixin):

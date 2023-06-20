@@ -38,7 +38,7 @@ class MeasurementGroupSerializer(serializers.ModelSerializer):
 
 class MeasurementGroupSerializer1(serializers.ModelSerializer):
 
-    customer = serializers.StringRelatedField(read_only=True)
+    # customer = serializers.StringRelatedField(read_only=True)
     company = serializers.StringRelatedField(read_only=True)
     measurements= MeasurementSerializer (many=True, read_only=True)
     class Meta:

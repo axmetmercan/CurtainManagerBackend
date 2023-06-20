@@ -5,7 +5,7 @@ from .models import UserType
 
 class UserSerializer(serializers.ModelSerializer):
     
-    type = serializers.StringRelatedField()
+    type = serializers.StringRelatedField(read_only=True)
     company = serializers.StringRelatedField(read_only=True)
     last_login = serializers.DateTimeField(read_only=True)
     class Meta:

@@ -63,6 +63,7 @@ class MeasurementGroupCRUDViewset(viewsets.ModelViewSet):
 class MeasurementListViewset(viewsets.GenericViewSet,
                              mixins.ListModelMixin,
                              mixins.RetrieveModelMixin,
+                             mixins.DestroyModelMixin,
                              mixins.CreateModelMixin):
 
     serializer_class = MeasurementSerializer

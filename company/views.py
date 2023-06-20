@@ -5,7 +5,7 @@ from .models import Company, Dealers
 from .permissions import IsAuthAndBelongsTo
 from rest_framework import permissions as per
 from .pagination import DefaultPagination
-
+from picture.models import Picture
 
 
 # Create your views here.
@@ -18,7 +18,19 @@ class CreateCompanyViewset(viewsets.GenericViewSet,
     permission_classes = []
     pagination_class = DefaultPagination
 
+
+
+    def perform_create(self, serializer):
+
+        pic = Picture.objects.get(id = self.request.data.get("tax_document_pic"))
+
+        instance = serializer.save(tax_document_pic=pic)
+
+        instance.save()
+        
 class CompanyDetailViews(viewsets.GenericViewSet,
+                         mixins.UpdateModelMixin,
+                         mixins.RetrieveModelMixin,
                          mixins.ListModelMixin):
 
     serializer_class = CompanySerializer

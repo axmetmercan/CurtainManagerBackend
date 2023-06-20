@@ -51,6 +51,7 @@ class CustomerOrderListViewset(viewsets.GenericViewSet,
                 id=measurment_group_id),
             customer=Customer.objects.get(id=customer_id),
             company=company,
+            status = "active"
 
         )
 
