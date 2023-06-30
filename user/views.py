@@ -3,6 +3,7 @@ from rest_framework import mixins, permissions, viewsets
 from .models import User, UserType
 from .serializers import UserSerializer, UserTypeSerializer
 from .pagination import DefaultPagination
+from company.models import Company
 
 
 class UserCRUD(viewsets.ModelViewSet):
@@ -15,9 +16,15 @@ class UserCRUD(viewsets.ModelViewSet):
         return User.objects.filter(company=self.request.user.company)
 
     def perform_create(self, serializer):
-        user_type = UserType.objects.get(title=self.request.data.get('type'))
-        instance = serializer.save(company=self.request.user.company,
-                      type=user_type,)
+        try:
+            user_type = UserType.objects.get(title=self.request.data.get('type'))
+            instance = serializer.save(company=self.request.user.company,
+                        type=user_type,)
+        except:
+            user_type = UserType.objects.get(title=self.request.data.get('type'))
+            company = Company.objects.get(id = self.request.data.get('company'))
+            instance = serializer.save(company=company,
+                        type=user_type,)
 
         instance.set_password(self.request.data.get('password'))
         instance.save()

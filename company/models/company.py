@@ -3,7 +3,7 @@ from picture.models import Picture
 
 class Company(models.Model):
     name = models.CharField(max_length=100, blank=False,
-                            null=False, verbose_name="Company Name")
+                            null=False, verbose_name="Company Name", unique=True)
     owner_name = models.CharField(
         max_length=100, blank=False, null=False, verbose_name="Owner Name")
     owner_surname = models.CharField(

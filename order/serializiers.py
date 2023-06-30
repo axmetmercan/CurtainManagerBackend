@@ -34,7 +34,7 @@ class CustomerOrderSerializer(serializers.ModelSerializer):
 
 
 class DealerOrderSerializer(serializers.ModelSerializer):
-    unit = serializers.StringRelatedField(read_only=True)
+    unit_type = serializers.StringRelatedField(read_only=True)
     status = serializers.CharField(source= 'get_status_display', read_only=True)
     dealer_company= serializers.StringRelatedField(read_only=True)
     product_company = serializers.StringRelatedField(read_only=True)

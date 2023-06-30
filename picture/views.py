@@ -12,7 +12,7 @@ class PictureLRViewset(viewsets.GenericViewSet,
                        mixins.CreateModelMixin):
     
     serializer_class = PictureSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     pagination_class = DefaultPagination
     # parser_classes = [MultiPartParser, FormParser]
 
@@ -21,4 +21,7 @@ class PictureLRViewset(viewsets.GenericViewSet,
         return Picture.objects.filter(uploaded_by=self.request.user.company)
     
     def perform_create(self, instance):
-        instance.save(uploaded_by=self.request.user.company)
+        try:
+            instance.save(uploaded_by=self.request.user.company)
+        except:
+            instance.save()

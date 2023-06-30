@@ -20,13 +20,17 @@ class CustomerOrderListViewset(viewsets.GenericViewSet,
     pagination_class = DefaultPagination
 
     def get_queryset(self):
-
-        queryset = CustomerOrder.objects.filter(
-            company=self.request.user.company)
+        try:
+                
+            queryset = CustomerOrder.objects.filter(
+                company=self.request.user.company)
+        except:
+             queryset = CustomerOrder.objects.filter()
         # To filter accourding to measurement group id
         # queryset = Customer.objects.none()
         group_id = self.request.query_params.get('group')
-
+        company_id = self.request.query_params.get('company')
+        print(group_id, company_id)
         # if filtered then
         if group_id:
             try:
@@ -34,7 +38,17 @@ class CustomerOrderListViewset(viewsets.GenericViewSet,
                     id=group_id), company=self.request.user.company)
                 return new_queryset
             except:
-                return queryset
+                if group_id:
+                    try:
+                        new_queryset = CustomerOrder.objects.filter(measurement_group=MeasurementGroup.objects.get(
+                            id=group_id), company=company_id)
+                        return new_queryset
+                    except:
+                        return queryset
+        return queryset
+        
+                    
+                
         return queryset
 
     def perform_create(self, serializer):
@@ -51,7 +65,7 @@ class CustomerOrderListViewset(viewsets.GenericViewSet,
                 id=measurment_group_id),
             customer=Customer.objects.get(id=customer_id),
             company=company,
-            status = "active"
+            status="active"
 
         )
 
@@ -75,11 +89,18 @@ class DealerOrderListViewset(viewsets.ModelViewSet):
 
         # To filter accourding to measurement group id
         group_id = self.request.query_params.get('group')
+        dealer_name = self.request.query_params.get('dealer')
         current_company = self.request.user.company
         # 3 Şekilde sorgulayacağım
         #   1 Kendi kendine siparişleri
         #   2 Üretici Olduğu siparişleri
         #   3 Bayi olduğu siparişleri
+
+        if dealer_name is not None:
+            queryset = DealerOrder.objects.filter(dealer_company=dealer_name,  product_company=current_company
+
+                                                  )
+            return queryset
 
         if group_id is not None and int(group_id) in [1, 2, 3]:
             print('if calisti')
@@ -106,16 +127,17 @@ class DealerOrderListViewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
 
         status = self.request.data.get('status')
-        unit = self.request.data.get('unit')
+        # unit = self.request.data.get('unit')
+        unit_type = self.request.data.get('unit_type')
         product = self.request.data.get('product')
         dealer_company = self.request.data.get('dealer_company')
         product_company = self.request.data.get('product_company')
 
         instance = serializer.save(
             status=status,
-            unit=Unit.objects.get(id=unit),
+            unit_type=Unit.objects.get(id=unit_type),
             product=Curtain.objects.get(id=product),
             dealer_company=Company.objects.get(id=dealer_company),
-            product_company=Company.objects.get(id=product_company),
-    
+            product_company=Company.objects.get(name=product_company),
+
         )
