@@ -113,8 +113,8 @@ DATABASES = {
         'NAME': env('NAME'),
         'USER': env('DBUSER'), 
         'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'), 
-        'PORT': env('PORT'),
+        'HOST': env("HOST"), 
+        'PORT': env("PORT"),
 
     }
 }
