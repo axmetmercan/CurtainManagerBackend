@@ -10,11 +10,27 @@ services:
       DBUSER: myuser
       PASSWORD: mypassword
 
+  # redis:
+  #   image: redis:latest
+
+
   redis:
-    image: redis:latest
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cache:/data
+
 
   rabbitmq:
     image: rabbitmq:latest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   web:
     build: .
@@ -32,7 +48,7 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: CurtainManager.settings
       CELERY_BROKER_URL: amqp://rabbitmq
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      # CELERY_RESULT_BACKEND: redis://redis:6379/0
       CACHE_URL: redis://redis:6379/1
 
   celery_worker:
@@ -47,7 +63,14 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: CurtainManager.settings
       CELERY_BROKER_URL: amqp://rabbitmq
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      # CELERY_RESULT_BACKEND: redis://redis:6379/0
+      CACHE_URL: redis://redis:6379/1
+
 
 volumes:
   pg_data:
+    driver: local
+  cache:
+    driver: local
+  rabbitmq_data:
+    driver: local

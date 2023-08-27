@@ -9,10 +9,10 @@ ENV PYTHONUNBUFFERED 1
 # create root directory for our project in the container
 RUN mkdir /mysite
 
-# Set the working directory to /music_service
+# Set the working directory to /mysite
 WORKDIR /mysite
 
-# Copy the current directory contents into the container at /music_service
+# Copy the current directory contents into the container at /mysite
 ADD . /mysite/
 
 # Install any needed packages specified in requirements.txt

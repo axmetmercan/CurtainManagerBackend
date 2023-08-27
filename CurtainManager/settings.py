@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import environ
 import os
@@ -21,18 +22,16 @@ env = environ.Env(
 environ.Env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "addsfsadfadsfdasf"#env('SECRET_KEY')
+SECRET_KEY = "addsfsadfadsfdasf"  # env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
@@ -50,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #Installed Apps
+    # Installed Apps
     'user.apps.UserConfig',
     'company.apps.CompanyConfig',
     'customer.apps.CustomerConfig',
@@ -60,10 +59,10 @@ INSTALLED_APPS = [
     'measurement.apps.MeasurementConfig',
 
 
-    #Installed Modules    
+    # Installed Modules
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'corsheaders',    
+    'corsheaders',
     'django_filters',
 
 
@@ -110,11 +109,11 @@ WSGI_APPLICATION = 'CurtainManager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('NAME'),
-        'USER': env('DBUSER'), 
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env("HOST"), 
-        'PORT': env("PORT"),
+        'NAME': "mydb",
+        'USER': "myuser",
+        'PASSWORD': "mypassword",
+        'HOST': "db",
+        'PORT': 5432,
 
     }
 }
@@ -139,14 +138,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-#JWT-Authentication Autharizations
+# JWT-Authentication Autharizations
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-    
+
 }
 
 
@@ -191,8 +190,7 @@ SIMPLE_JWT = {
 }
 
 
-
-#Sending Emails Django Default
+# Sending Emails Django Default
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -206,7 +204,6 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -218,8 +215,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL='user.User'
-
+AUTH_USER_MODEL = 'user.User'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -239,25 +235,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#CorsHeader
+# CorsHeader
 # CORS_ALLOW_ALL_ORIGINS: True
 
 CORS_ALLOWED_ORIGINS = [
-"https://domain.com",
-"https://api.domain.com",
-"http://localhost:8080",
-"http://127.0.0.1:9000",
-"http://localhost:5173",
+    "https://domain.com",
+    "https://api.domain.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+    "http://localhost:5173",
 ]
 
-## Celery Broker uRL
-CELERY_BROKER_URL = 'amqp://localhost'
+# Celery Broker uRL
+CELERY_BROKER_URL= env("CELERY_BROKER_URL")
+# CELERY_RESULT_BACKEND= env("CELERY_RESULT_BACKEND") 
+CACHE_URL= env("CACHE_URL") 
 
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@redis:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
