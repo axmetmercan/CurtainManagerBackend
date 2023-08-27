@@ -249,3 +249,21 @@ CORS_ALLOWED_ORIGINS = [
 "http://127.0.0.1:9000",
 "http://localhost:5173",
 ]
+
+## Celery Broker uRL
+CELERY_BROKER_URL = 'amqp://localhost'
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CACHE_TTL = 60 * 1

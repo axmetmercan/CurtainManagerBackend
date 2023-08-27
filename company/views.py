@@ -6,9 +6,10 @@ from .permissions import IsAuthAndBelongsTo
 from rest_framework import permissions as per
 from .pagination import DefaultPagination
 from picture.models import Picture
-
+from .tasks import send_email
 
 # Create your views here.
+
 
 class CreateCompanyViewset(viewsets.GenericViewSet,
                            mixins.CreateModelMixin,
@@ -18,16 +19,15 @@ class CreateCompanyViewset(viewsets.GenericViewSet,
     permission_classes = []
     pagination_class = DefaultPagination
 
-
-
     def perform_create(self, serializer):
 
-        pic = Picture.objects.get(id = self.request.data.get("tax_document_pic"))
+        pic = Picture.objects.get(id=self.request.data.get("tax_document_pic"))
 
         instance = serializer.save(tax_document_pic=pic)
 
         instance.save()
-        
+
+
 class CompanyDetailViews(viewsets.GenericViewSet,
                          mixins.UpdateModelMixin,
                          mixins.RetrieveModelMixin,
@@ -76,6 +76,8 @@ class CreateDestroyDealerViewset(viewsets.GenericViewSet,
 
         serializer.validated_data['whole_saler'] = self.request.user.company
 
+        # To send email make some modifications....
+        send_email.delay('You Have  New Dealership!',
+                         f'Congrats you have new dealership from {self.request.user.company}!', 'axmetmercan@gmail.com', 'to_new_dealer@blabal.com')
+
         return super().perform_create(serializer)
-
-

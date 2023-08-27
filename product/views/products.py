@@ -9,7 +9,7 @@ from django.db.models import F
 from ..pagination import DefaultPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from picture.models import Picture
-
+from .tasks import  first_task
 
 # ORM Queries will be optimized when it gets larger.
 # !Lots of sql queries that slows db.
@@ -75,6 +75,7 @@ class CurtainListViewSet(viewsets.ModelViewSet):
                                    color=color,
                                    img1 = img,
                                    category=category)
+
 
 
 class CurtainWithVariantViewset(viewsets.ModelViewSet):

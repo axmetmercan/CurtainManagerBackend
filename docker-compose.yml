@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+
+  redis:
+    image: redis:latest
+
+  rabbitmq:
+    image: rabbitmq:latest
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+  
+    environment:
+      DJANGO_SETTINGS_MODULE: CurtainManager.settings
+      CELERY_BROKER_URL: amqp://rabbitmq
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      CACHE_URL: redis://redis:6379/1
+
+  celery_worker:
+    build: .
+    command: celery -A CurtainManager worker -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    environment:
+      DJANGO_SETTINGS_MODULE: CurtainManager.settings
+      CELERY_BROKER_URL: amqp://rabbitmq
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+
+volumes:
+  pg_data:

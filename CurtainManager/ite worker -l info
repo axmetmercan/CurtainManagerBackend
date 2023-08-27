@@ -1,0 +1,15 @@
+[0;1;32m●[0m rabbitmq-server.service - RabbitMQ Messaging Server
+     Loaded: loaded (/lib/systemd/system/rabbitmq-server.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Tue 2023-08-22 14:21:43 CEST; 7h ago
+   Main PID: 1021 (beam.smp)
+      Tasks: 51 (limit: 18318)
+     Memory: 141.5M
+        CPU: 3min 7.411s
+     CGroup: /system.slice/rabbitmq-server.service
+             ├─1021 /usr/lib/erlang/erts-12.2.1/bin/beam.smp -W w -MBas ageffcbf -MHas ageffcbf -MBlmbcs 512 -MHlmbcs 512 -MMmcs 30 -P 1048576 -t 5000000 -stbt db -zdbbl 128000 -sbwt none -sbwtdcpu none -sbwtdio none -- -root /usr/lib/erlang -progname erl -- -home /var/lib/rabbitmq -- -pa "" -noshell -noinput -s rabbit boot -boot start_sasl -syslog logger "[]" -syslog syslog_error_logger false
+             ├─1113 erl_child_setup 65536
+             ├─1910 inet_gethost 4
+             └─1911 inet_gethost 4
+
+Ağu 22 14:21:39 mercan systemd[1]: Starting RabbitMQ Messaging Server...
+Ağu 22 14:21:43 mercan systemd[1]: Started RabbitMQ Messaging Server.
